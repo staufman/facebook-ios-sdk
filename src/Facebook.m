@@ -116,6 +116,7 @@ static NSString* kSDKVersion = @"2";
   // This minimizes the chance that the user will have to enter his or
   // her credentials in order to authorize the application.
   BOOL didOpenOtherApp = NO;
+
   UIDevice *device = [UIDevice currentDevice];
   if ([device respondsToSelector:@selector(isMultitaskingSupported)] && [device isMultitaskingSupported]) {
     if (tryFBAppAuth) {
@@ -123,13 +124,15 @@ static NSString* kSDKVersion = @"2";
       didOpenOtherApp = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:fbAppUrl]];
     }
 
-    if (trySafariAuth && !didOpenOtherApp) {
+
+	 /* atabot: don't open in safari EVER!
+	  if (trySafariAuth && !didOpenOtherApp) {
       NSString *nextUrl = [NSString stringWithFormat:@"fb%@://authorize", _appId];
       [params setValue:nextUrl forKey:@"redirect_uri"];
 
       NSString *fbAppUrl = [FBRequest serializeURL:kOAuthURL params:params];
       didOpenOtherApp = [[UIApplication sharedApplication] openURL:[NSURL URLWithString:fbAppUrl]];
-    }
+    }*/
   }
 
   // If single sign-on failed, open an inline login dialog. This will require the user to
